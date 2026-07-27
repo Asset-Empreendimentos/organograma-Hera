@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organograma Hera — Estrutura Societária</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ec;--bg2:#eae6de;--navy:#1a2e45;--orange:#b84c12;--orange-bg:#fbe6d8;--orange-border:#b84c12;--gold:#8a6424;--gold-bg:#f5e8cc;--gold-border:#c9a043;--text-dark:#1a1a2e;--text-light:#666;--shadow:0 2px 10px rgba(0,0,0,0.12);--shadow-hover:0 6px 22px rgba(0,0,0,0.22);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-dark);min-height:100vh;overflow-x:auto;}
+header{text-align:center;padding:28px 24px 16px;background:var(--navy);border-bottom:3px solid var(--gold-border);}
+header h1{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#f5e8cc;letter-spacing:.04em;}
+header p{font-size:.73rem;color:#aab8c8;margin-top:5px;letter-spacing:.07em;text-transform:uppercase;}
+.legend{display:flex;gap:28px;justify-content:center;padding:10px 24px;font-size:.73rem;color:#3a3a5a;background:var(--bg2);border-bottom:1px solid #d0c8bb;flex-wrap:wrap;}
+.legend span{display:flex;align-items:center;gap:7px;font-weight:500;}
+.dot{width:12px;height:12px;border-radius:3px;}
+.dot-orange{background:var(--orange);}
+.dot-gold{background:#c9a043;}
+.chart-wrap{padding:24px 24px 48px;overflow:hidden;display:flex;justify-content:center;}
+#scaler{transform-origin:top center;transition:transform .1s;}
+.node{position:relative;border-radius:7px;padding:9px 13px;font-size:.77rem;font-weight:500;line-height:1.4;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s;user-select:none;text-decoration:none;display:inline-block;}
+.node:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.node.orange{background:var(--orange-bg);color:#3a1500;border:2px solid var(--orange-border);box-shadow:var(--shadow);}
+.node.gold{background:var(--gold-bg);color:var(--navy);border:2px solid var(--gold-border);box-shadow:var(--shadow);}
+.node .label{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;display:block;}
+.node .sub{font-size:.68rem;opacity:.75;display:block;margin-top:1px;}
+.node .pct{font-size:.67rem;font-weight:700;display:block;margin-top:3px;color:var(--orange);}
+.node .projects{font-size:.63rem;text-align:left;margin-top:4px;display:block;line-height:1.55;opacity:.8;}
+.w-root{min-width:140px;max-width:160px;}
+.w-cpa{min-width:154px;max-width:178px;}
+.w-llc{min-width:110px;max-width:125px;}
+.w-inc{min-width:150px;max-width:168px;}
+.tooltip{display:none;position:fixed;z-index:9999;background:var(--navy);border:2px solid var(--gold-border);border-radius:9px;padding:15px 17px;width:280px;box-shadow:0 12px 40px rgba(0,0,0,.35);pointer-events:none;font-size:.73rem;line-height:1.6;color:#e8e0d0;}
+.tooltip.visible{display:block;}
+.sheet-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9998;}
+.sheet-overlay.open{display:block;}
+.sheet{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--navy);border-top:2px solid var(--gold-border);border-radius:18px 18px 0 0;padding:20px 20px 32px;max-height:70vh;overflow-y:auto;transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);}
+.sheet.open{transform:translateY(0);}
+.sheet-handle{width:40px;height:4px;background:rgba(255,255,255,.25);border-radius:2px;margin:0 auto 16px;}
+.tooltip h3,.sheet h3{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#f5e8cc;margin-bottom:9px;border-bottom:1px solid rgba(201,160,67,.4);padding-bottom:6px;}
+.tooltip .tsec,.sheet .tsec{margin-bottom:9px;}
+.tooltip .tsec-title,.sheet .tsec-title{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#c9a043;margin-bottom:3px;font-weight:600;}
+.tooltip .trow,.sheet .trow{display:flex;gap:6px;align-items:baseline;margin-bottom:1px;color:#e8e0d0;}
+.tooltip .trow .ico,.sheet .trow .ico{font-size:.65rem;flex-shrink:0;}
+.tooltip .trow a,.sheet .trow a{color:#90bfee;text-decoration:none;}
+.tooltip .trow a:hover{text-decoration:underline;}
+.tooltip .thint,.sheet .thint{font-size:.63rem;color:#8899aa;margin-top:9px;padding-top:7px;border-top:1px solid rgba(255,255,255,.1);text-align:center;}
+footer{text-align:center;padding:18px;font-size:.68rem;color:var(--text-light);border-top:1px solid #d0c8bb;background:var(--bg2);}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hera — Estrutura Societária</h1>
+  <p>Passe o mouse sobre as caixas para ver detalhes · Clique para abrir pasta</p>
+</header>
+<div class="legend">
+  <span><span class="dot dot-gold"></span> Alcogal / Offshore</span>
+  <span><span class="dot dot-orange"></span> Estrutura Hera — Karin</span>
+</div>
+<div class="chart-wrap">
+<div id="scaler">
+<div id="treeWrap" style="position:relative;display:inline-block;">
+
+  <!-- Alcogal -->
+  <div style="display:flex;justify-content:center;">
+    <div class="node gold w-root" data-tooltip="alcogal" id="n-alcogal" style="cursor:default;">
+      <span class="label">Alcogal</span>
+      <span class="sub">Offshore · Gestora</span>
+    </div>
+  </div>
+  <div style="height:36px;"></div>
+
+  <!-- Hera -->
+  <div style="display:flex;justify-content:center;">
+    <a class="node orange w-root" href="LINK_HERA" target="_blank" data-tooltip="hera" id="n-hera">
+      <span class="label">Hera</span>
+      <span class="sub">Cayman · Karin</span>
+    </a>
+  </div>
+  <div style="height:36px;"></div>
+
+  <!-- CPA BTU -->
+  <div style="display:flex;justify-content:center;">
+    <a class="node orange w-cpa" href="LINK_CPA_BTU_HERA" target="_blank" data-tooltip="cpa_btu" id="n-cpa-btu-hera">
+      <span class="label">CPA — BTU Intl.</span>
+      <span class="sub">Daniel Merlino</span>
+      <span class="sub">LLCs: IPH77 · IPH99</span>
+    </a>
+  </div>
+  <div style="height:26px;"></div>
+
+  <!-- LLCs -->
+  <div style="display:flex;gap:20px;align-items:flex-start;justify-content:center;">
+
+    <!-- IPH77 -->
+    <div style="display:flex;flex-direction:column;align-items:center;" id="col-iph77h">
+      <a class="node orange w-llc" href="LINK_IPH77" target="_blank" data-tooltip="iph77_hera" id="n-iph77h">
+        <span class="label">IPH77</span><span class="pct">33% Hera</span>
+      </a>
+      <div style="height:22px;"></div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <a class="node orange w-inc" href="LINK_MATTONI_DORAL" target="_blank" data-tooltip="mattoni" id="n-mat-doral-h">
+          <span class="label" style="font-size:.88rem;">Mattoni</span>
+          <span class="sub">Vicente Cotrim</span>
+          <span class="projects">· Doral 1 · Doral 2</span>
+        </a>
+        <a class="node orange w-inc" href="LINK_INTEGRA_NOMI" target="_blank" data-tooltip="integra" id="n-int-nomi-h">
+          <span class="label" style="font-size:.88rem;">Integra</span>
+          <span class="sub">Luis F. Boccato</span>
+          <span class="projects">· Nomi - North Miami</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- IPH99 -->
+    <div style="display:flex;flex-direction:column;align-items:center;" id="col-iph99h">
+      <a class="node orange w-llc" href="LINK_IPH99" target="_blank" data-tooltip="iph99_hera" id="n-iph99h">
+        <span class="label">IPH99</span><span class="pct">50% Hera</span>
+      </a>
+      <div style="height:22px;"></div>
+      <a class="node orange w-inc" href="LINK_INTEGRA_MONACO" target="_blank" data-tooltip="integra" id="n-int-monaco-h">
+        <span class="label" style="font-size:.88rem;">Integra</span>
+        <span class="sub">Luis F. Boccato</span>
+        <span class="projects">· Monaco Isles<br>· Gables Waterway<br>· Marina Ventures</span>
+      </a>
+    </div>
+
+  </div>
+</div><!-- end treeWrap -->
+</div><!-- end scaler -->
+</div>
+<div class="tooltip" id="tooltip"></div>
+<div class="sheet-overlay" id="overlay"></div>
+<div class="sheet" id="sheet"><div class="sheet-handle"></div><div id="sheet-content"></div></div>
+<footer>📱 Toque duplo nas caixas para ver detalhes &nbsp;·&nbsp; 🖥️ Passe o mouse para ver contatos</footer>
+<script>
+function rc(id){return document.getElementById(id).getBoundingClientRect();}
+function wrap(){return document.getElementById('treeWrap');}
+function drawLines(){
+  const w=wrap();
+  const old=w.querySelector('svg');if(old)old.remove();
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;';
+  w.appendChild(svg);
+  const O='#b84c12',G='#c9a043';
+  const WR=w.getBoundingClientRect();
+  function bot(id){const r=rc(id);return{x:r.left+r.width/2-WR.left,y:r.bottom-WR.top};}
+  function top(id){const r=rc(id);return{x:r.left+r.width/2-WR.left,y:r.top-WR.top};}
+  function elbow(x1,y1,x2,y2,c,sw){
+    const mid=y1+(y2-y1)*0.5;
+    const d=`M${x1},${y1} L${x1},${mid} L${x2},${mid} L${x2},${y2}`;
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d);p.setAttribute('stroke',c);p.setAttribute('stroke-width',sw);
+    p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');
+    svg.appendChild(p);
+  }
+  function line(x1,y1,x2,y2,c,sw){
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+    l.setAttribute('stroke',c);l.setAttribute('stroke-width',sw);l.setAttribute('stroke-linecap','round');
+    svg.appendChild(l);
+  }
+  function treeBranch(parentId,childIds,c,sw,off){
+    const pb=bot(parentId);
+    const tops=childIds.map(id=>top(id));
+    const lefts=childIds.map(id=>{const r=rc(id);return r.left-WR.left;});
+    const spX=Math.min(...lefts)-off;
+    const fY=tops[0].y,lY=tops[tops.length-1].y;
+    line(pb.x,pb.y,pb.x,fY-10,c,sw);
+    line(pb.x,fY-10,spX,fY-10,c,sw);
+    line(spX,fY-10,spX,lY,c,sw);
+    tops.forEach(t=>line(spX,t.y,t.x,t.y,c,sw));
+  }
+  // Alcogal → Hera
+  elbow(bot('n-alcogal').x,bot('n-alcogal').y,top('n-hera').x,top('n-hera').y,G,3.5);
+  // Hera → BTU
+  elbow(bot('n-hera').x,bot('n-hera').y,top('n-cpa-btu-hera').x,top('n-cpa-btu-hera').y,O,3);
+  // BTU → IPH77h, IPH99h
+  const b=bot('n-cpa-btu-hera');
+  ['n-iph77h','n-iph99h'].forEach(id=>{const t=top(id);elbow(b.x,b.y,t.x,t.y,O,2.5);});
+  // IPH77h → Mattoni, Integra
+  treeBranch('n-iph77h',['n-mat-doral-h','n-int-nomi-h'],O,2,16);
+  // IPH99h → Integra
+  elbow(bot('n-iph99h').x,bot('n-iph99h').y,top('n-int-monaco-h').x,top('n-int-monaco-h').y,O,2);
+}
+function autoScale(){
+  const scaler=document.getElementById('scaler');
+  const wrap=document.getElementById('treeWrap');
+  scaler.style.transform='scale(1)';
+  const available=document.querySelector('.chart-wrap').clientWidth-48;
+  const natural=wrap.scrollWidth;
+  if(natural>available){
+    const ratio=available/natural;
+    scaler.style.transform=`scale(${ratio})`;
+    scaler.style.marginBottom=`${(wrap.scrollHeight*(ratio-1))}px`;
+  }
+}
+window.addEventListener('load',()=>{drawLines();autoScale();});
+window.addEventListener('resize',()=>{drawLines();autoScale();});
+
+const C={
+  alcogal:{title:"Alcogal",sections:[{title:"Offshore · Gestora",rows:[{i:"🏢",t:"Alcogal"},{i:"👤",t:"Marcos Turmero"},{i:"📞",t:"+507 269 2620"},{i:"✉️",t:"mturmero@alcogal.com",l:"mailto:mturmero@alcogal.com"}]}]},
+  hera:{title:"Hera",sections:[{title:"Cayman · Karin",rows:[{i:"🏢",t:"Alcogal"},{i:"👤",t:"Marcos Turmero"},{i:"📞",t:"+507 269 2620"},{i:"✉️",t:"mturmero@alcogal.com",l:"mailto:mturmero@alcogal.com"}]}],hint:"📁 Clique para abrir pasta"},
+  cpa_btu:{title:"CPA — BTU Internacional",sections:[{title:"Contabilidade",rows:[{i:"🏢",t:"BTU Internacional"},{i:"👤",t:"Daniel Merlino"},{i:"📞",t:"+1 305 680 7235"},{i:"✉️",t:"dmerlino@btu-international.com",l:"mailto:dmerlino@btu-international.com"}]},{title:"LLCs",rows:[{i:"📋",t:"IPH77 · IPH99"}]}],hint:"📁 Clique para abrir pasta"},
+  iph77_hera:{title:"IPH77",sections:[{title:"LLC",rows:[{i:"📊",t:"33% Hera · 67% IP44"},{i:"⚖️",t:"BTU Internacional"}]},{title:"Projetos",rows:[{i:"📌",t:"Doral 1 (Mattoni)"},{i:"📌",t:"Doral 2 (Mattoni)"},{i:"📌",t:"Nomi - North Miami (Integra)"}]}],hint:"📁 Clique para abrir pasta"},
+  iph99_hera:{title:"IPH99",sections:[{title:"LLC",rows:[{i:"📊",t:"50% Hera · 50% IP44"},{i:"⚖️",t:"BTU Internacional"}]},{title:"Projetos",rows:[{i:"📌",t:"Monaco Isles (Integra)"},{i:"📌",t:"Gables Waterway (Integra)"},{i:"📌",t:"Marina Ventures (Integra)"}]}],hint:"📁 Clique para abrir pasta"},
+  mattoni:{title:"Mattoni Empreendimentos",sections:[{title:"Incorporadora",rows:[{i:"🏢",t:"Mattoni Empreendimentos"},{i:"👤",t:"Vicente Cotrim"},{i:"📞",t:"+1 305 621 9607"},{i:"✉️",t:"vcotrim@mattonigroup.com",l:"mailto:vcotrim@mattonigroup.com"}]}],hint:"📁 Clique para abrir pasta"},
+  integra:{title:"Integra Empreendimentos",sections:[{title:"Incorporadora",rows:[{i:"🏢",t:"Integra Empreendimentos"},{i:"👤",t:"Luis Fernando Boccato"},{i:"📞",t:"+1 305 497 2567"},{i:"✉️",t:"luis@integrafl.com",l:"mailto:luis@integrafl.com"}]}],hint:"📁 Clique para abrir pasta"}
+};
+function buildTip(k){const d=C[k];if(!d)return'';let h=`<h3>${d.title}</h3>`;for(const s of d.sections){h+=`<div class="tsec"><div class="tsec-title">${s.title}</div>`;for(const r of s.rows)h+=r.l?`<div class="trow"><span class="ico">${r.i}</span><a href="${r.l}">${r.t}</a></div>`:`<div class="trow"><span class="ico">${r.i}</span><span>${r.t}</span></div>`;h+=`</div>`;}if(d.hint)h+=`<div class="thint">${d.hint}</div>`;return h;}
+const tip=document.getElementById('tooltip');
+const sheet=document.getElementById('sheet');
+const overlay=document.getElementById('overlay');
+const sheetContent=document.getElementById('sheet-content');
+const isMobile=()=>window.matchMedia('(max-width:768px)').matches||('ontouchstart' in window);
+
+function closeSheet(){sheet.classList.remove('open');overlay.classList.remove('open');}
+overlay.addEventListener('click',closeSheet);
+
+const lastTap={};
+const DBL_DELAY=320;
+
+document.querySelectorAll('[data-tooltip]').forEach(el=>{
+  const key=el.id||el.dataset.tooltip;
+
+  el.addEventListener('mouseenter',e=>{
+    if(isMobile())return;
+    const h=buildTip(el.dataset.tooltip);if(!h)return;
+    tip.innerHTML=h;tip.classList.add('visible');pos(e);
+  });
+  el.addEventListener('mousemove',e=>{if(!isMobile())pos(e);});
+  el.addEventListener('mouseleave',()=>tip.classList.remove('visible'));
+
+  el.addEventListener('touchend',e=>{
+    if(!isMobile())return;
+    const now=Date.now();
+    if(lastTap[key]&&(now-lastTap[key])<DBL_DELAY){
+      const h=buildTip(el.dataset.tooltip);if(!h)return;
+      sheetContent.innerHTML=h;
+      sheet.classList.add('open');overlay.classList.add('open');
+      e.preventDefault();
+      lastTap[key]=0;
+    } else {
+      lastTap[key]=now;
+    }
+  });
+
+  if(el.tagName==='A')el.addEventListener('click',e=>{
+    const hr=el.getAttribute('href');
+    if(!hr||hr.startsWith('LINK_')){e.preventDefault();if(!isMobile())alert('⚠️ Link não configurado.\n\nSubstitua "'+hr+'" pelo link real.');}
+  });
+});
+function pos(e){
+  const pad=16,tw=tip.offsetWidth,th=tip.offsetHeight;
+  let x=e.clientX+pad,y=e.clientY+pad;
+  if(x+tw>window.innerWidth-8)x=e.clientX-tw-pad;
+  if(y+th>window.innerHeight-8)y=e.clientY-th-pad;
+  tip.style.left=x+'px';tip.style.top=y+'px';
+}
+</script>
+</body>
+</html>
