@@ -221,27 +221,36 @@ const tip=document.getElementById('tooltip');
 const sheet=document.getElementById('sheet');
 const overlay=document.getElementById('overlay');
 const sheetContent=document.getElementById('sheet-content');
-const isMobile=()=>window.matchMedia('(max-width:768px)').matches||('ontouchstart' in window);
 
-function closeSheet(){sheet.classList.remove('open');overlay.classList.remove('open');}
-overlay.addEventListener('click',closeSheet);
+function closeCard(){
+  tip.classList.remove('visible');
+  sheet.classList.remove('open');
+  overlay.classList.remove('open');
+}
+overlay.addEventListener('click',closeCard);
 
 const lastTap={};
-const DBL_DELAY=320;
+const DBL_DELAY=350;
 
 document.querySelectorAll('[data-tooltip]').forEach(el=>{
   const key=el.id||el.dataset.tooltip;
 
-  el.addEventListener('mouseenter',e=>{
-    if(isMobile())return;
+  // Double click (desktop)
+  el.addEventListener('dblclick',e=>{
+    e.preventDefault();
     const h=buildTip(el.dataset.tooltip);if(!h)return;
-    tip.innerHTML=h;tip.classList.add('visible');pos(e);
+    tip.innerHTML=h;
+    // position tooltip
+    const pad=16,tw=280,th=200;
+    let x=e.clientX+pad, y=e.clientY+pad;
+    if(x+tw>window.innerWidth-8) x=e.clientX-tw-pad;
+    if(y+th>window.innerHeight-8) y=e.clientY-th-pad;
+    tip.style.left=x+'px'; tip.style.top=y+'px';
+    tip.classList.add('visible');
   });
-  el.addEventListener('mousemove',e=>{if(!isMobile())pos(e);});
-  el.addEventListener('mouseleave',()=>tip.classList.remove('visible'));
 
+  // Double tap (mobile/touch)
   el.addEventListener('touchend',e=>{
-    if(!isMobile())return;
     const now=Date.now();
     if(lastTap[key]&&(now-lastTap[key])<DBL_DELAY){
       const h=buildTip(el.dataset.tooltip);if(!h)return;
@@ -254,17 +263,16 @@ document.querySelectorAll('[data-tooltip]').forEach(el=>{
     }
   });
 
-  if(el.tagName==='A')el.addEventListener('click',e=>{
-    e.preventDefault();
-  });
+  // Prevent single click navigation
+  if(el.tagName==='A') el.addEventListener('click',e=>e.preventDefault());
 });
-function pos(e){
-  const pad=16,tw=tip.offsetWidth,th=tip.offsetHeight;
-  let x=e.clientX+pad,y=e.clientY+pad;
-  if(x+tw>window.innerWidth-8)x=e.clientX-tw-pad;
-  if(y+th>window.innerHeight-8)y=e.clientY-th-pad;
-  tip.style.left=x+'px';tip.style.top=y+'px';
-}
+
+// Close tooltip when clicking outside
+document.addEventListener('click',e=>{
+  if(!tip.contains(e.target)&&!e.target.closest('[data-tooltip]')){
+    tip.classList.remove('visible');
+  }
+});
 </script>
 </body>
 </html>
